@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+<script src="{% static 'home/js/parallax.js' %}"></script>
+
+
+<div class=" home container-fluid col-md-12 col-lg-6 order-lg-2 p-3">
+    
+
+<div class="row">
+	<div class="home-container col-lg-6">
+        	<ul id="scene">
+            <li class="layer" data-depth=".1"><img src="{% static 'home/img/1-removebg-preview.png' %}"></li>
+			<li class="layer" data-depth="1"><img src="{% static 'home/img/2-removebg-preview.png' %}"></li>
+			<li class="layer" data-depth="-1"><img src="{% static 'home/img/3-removebg-preview.png' %}"></li>
+			<li class="layer" data-depth="2"><img src="{% static 'home/img/4-removebg-preview.png' %}"></li>
+			<!-- <li class="layer" data-depth="0.5"><img src="{% static 'home/img/5-removebg-preview.png' %}"></li> -->
+		</ul>
+    </div>
+    <div class="col-lg-6 p-4 my-auto">
+        <h4>What this website is all about?</h4>
+        <hr>
+        <h5><p> This place is for those technology enthusiasts who wish to know more and explore technology, especially of India.</p>
+            <p>Here we post <a href="/all_articles/">Informational articles</a> covering various fields of technology, compiled from government publications and authentic sources. Along with these, you can find <a href="/recruitment_articles/">recruitment information</a>  from the government institutions of India.</p>
+            <p>Through this medium, we wish the achievements of our nation reach its proud citizens and the rest of the globe.</p>
+            <p>Got any question? <a href="mailto:technologyfocusmagazine@gmail.com">Contact</a> us. </p>
+        </h5>
+    </div>
+
+</div>
+</div>
+	<script>
+		var scene = document.getElementById('scene');
+		var parallax = new Parallax(scene);
+    </script>
+
+{% endblock %}

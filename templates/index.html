@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+<div class="col-md-12 col-lg-6 order-lg-2 p-3">
+    <div class="container my-4">
+        <div class="page-header">
+            <h3>{{ post.title }}</h3>
+            <small class="text-muted">Published on, {{ post.publish_date }}</small>
+
+            {% if request.get_full_path != "/post_detail/" %}
+            <div class=" float-right fb-share-button" data-href="http://127.0.0.1:8000/post_detail/{{post.slug}}" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fpost_detail%2Flatest-post%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+            {% elif request.get_full_path != "/recruitment_post_detail/" %}
+            <div class=" float-right fb-share-button" data-href="http://127.0.0.1:8000/recruitment_post_detail/{{post.slug}}" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fpost_detail%2Flatest-post%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+            {% endif %}
+
+
+            
+            <hr>   
+        </div>
+    </div>
+
+    <div id="carouselExampleIndicators" class="carousel slide my-4">
+        <ol class="carousel-indicators">
+            {% for image in post.picture_set.all %}
+               <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter}}" class="{% if forloop.counter0 == 0 %}active{% endif %}"></li>
+            {% endfor %}
+        </ol>
+            
+        <div class="carousel-inner">
+            {% for image in post.picture_set.all %} 
+                <div class="carousel-item  {% if forloop.counter0 == 0 %}active{% endif %} ">
+                    <img class="d-block w-100" src="{{ MEDIA_URL}} {{ image.pic.url }}" alt="First slide">
+                </div>                  
+            {% endfor %}
+        </div>
+        
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <p>{{ post.body|safe|linebreaks }}</p>    
+
+    {% if request.get_full_path != "/post_detail/" %}
+        <div class="fb-comments" data-href="http://127.0.0.1:8000/post_detail/{{post.slug}}" data-numposts="5" data-width=""></div>
+    {% elif request.get_full_path != "/recruitment_post_detail/" %}
+        <div class="fb-comments" data-href="http://127.0.0.1:8000/recruitment_post_detail/{{post.slug}}" data-numposts="5" data-width=""></div>
+    {% endif %}
+</div>
+
+        
+{% endblock %}

@@ -1,0 +1,16 @@
+
+.home-container
+{
+	overflow: -moz-hidden-unscrollable;
+	background: url("/static/home/img/5.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	/* background-color:rgb(201, 201, 201); */
+
+	/* background-attachment: fixed; */
+}
+
+.home{
+	box-shadow: 5px 10px 8px #888888;
+	color: #074e77;
+}

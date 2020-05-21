@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+<div class="col-md-12 col-lg-6 order-lg-2 p-3">
+    <div class="h-100 row align-items-center">
+        <h1>What do you want to do?</h1>
+        <a href="{% url 'create_post' %}" class="btn p-3 m-3">Create Informational Article</a>
+        <a href="{% url 'create_recruitment_post' %}" class="btn p-3 m-3">Create Recruitment Article</a>
+    </div>   
+</div>
+{% endblock %}

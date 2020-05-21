@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Focus</title>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{% static 'index/css/bootstrap.min.css' %}">
+    <!-- google font -->
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+    <!-- main css -->
+    <link type="text/css" rel="stylesheet" href="{% static 'index/css/main.css' %}">
+    <!-- tab icon link -->
+    <link rel = "icon" href="{% static 'index/img/logo1.png' %}" type = "image/x-icon"> 
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Medium editor -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    <!-- facebook comment plugin -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
+    <!--google material icon  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    
+    
+</head>
+<body>
+
+    <!-- header nav bar -->
+<nav class="navbar navbar-expand-lg sticky-top" style="background-color: #04659e">
+        <a class="navbar-brand ml-lg-5" href="/">    
+            Technology Focus
+            <img src="{% static 'index/img/logo2.png' %}" width="45" height="45" class="d-inline-block align-top">  
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="material-icons" style="color: white;">menu</i>
+        </button> 
+  <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link mx-2" href="/">Home</a>
+      <a class="nav-item nav-link mx-2" href="/all_articles/">Informational Articles</a>
+      <a class="nav-item nav-link mx-2" href="/recruitment_articles/">Recruitment Articles</a>
+      <a class="nav-item nav-link mx-2" href="https://www.facebook.com/DRDOTECHNOVATION/">Facebook Page</a>
+      <a class="nav-item nav-link mx-2" href="/">About Us</a>
+    </div>
+  </div>
+</nav>
+{% if request.user.is_staff %}
+<div class=" p-3 " style="float: right;">
+  <a href="{% url 'editor' %}?next=/" class="btn btn-lg m-3">Go to Editor</a>
+  <a href="{% url 'logout' %}?next=/" class="btn btn-lg m-3">Logout</a>
+  
+</div>
+  
+{% endif %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        
+        {% block content %} 
+        
+        {% endblock %}
+        
+        <!-- space for affiliated marketing -->
+        <div class="col-md-12 col-lg-3 order-lg-3 p-3">
+          <div class="col-12 ">
+            <div class="row d-none d-lg-block">
+              <script type="text/javascript" language="javascript">
+                var aax_size='160x600';
+                var aax_pubname = 'innovation0a7-21';
+                var aax_src='302';
+              </script>
+              <script type="text/javascript" language="javascript" src="http://c.amazon-adsystem.com/aax2/assoc.js"></script>
+            </div>
+
+            <div class="row">
+              <script type="text/javascript" language="javascript">
+                    var aax_size='300x250';
+                    var aax_pubname = 'innovation0a7-21';
+                    var aax_src='302';
+              </script>
+              <script type="text/javascript" language="javascript" src="http://c.amazon-adsystem.com/aax2/assoc.js"></script>
+            </div>
+          </div>
+         
+        </div>
+
+       
+        <div id="content-2" class="col-md-12 col-lg-3 order-lg-1 p-3">
+                    <!-- all articles -->
+                    {% if request.get_full_path != "/all_articles/" %}
+                    <a href="/all_articles/" class="btn btn-block w-75 mx-auto p-2 my-3" role="button">VIEW MORE ARTICLES <i class="fa fa-angle-double-right"></i></a>
+                    <div class="row custom-scrollbar-css"  style="overflow: auto; max-height:400px; overflow-x: hidden">
+                      <div class="card-deck list-group">
+                          {% for article in articles|slice:"0:5" %}
+                          <div class="card list-group-item list-group-item-action mx-auto w-75 my-2">
+                              {% with article.picture_set.all.first as image %} 
+                              <img src="{{ MEDIA_URL}} {{ image.pic.url }}" class="card-img-top">
+                              {% endwith %}
+                              <div class="card-body">
+                                  <h5 class="card-title">{{ article.title }}</h5>
+                                  <p class="card-text">{{ article.body|safe|truncatechars:50 }}</p>
+                              </div>
+                              <div class="card-footer">
+                                  <small class="text-muted">Published on, {{ article.publish_date }}</small>
+                              </div>
+                              <a href="{% url 'post_detail' slug_text=article.slug %}" class="stretched-link"></a>
+                          </div>
+                          {% endfor %}
+                      </div>
+                      
+                    </div>
+            <hr>
+            {% endif %}
+
+          <!--recruitment articles  -->
+          {% if request.get_full_path != "/recruitment_articles/" %}
+          <a href="/recruitment_articles/" class="btn btn-block w-75 mx-auto p-2 my-3" role="button">RECRUITMENT ARTICLES <i class="fa fa-angle-double-right"></i></a>
+          <div class="row custom-scrollbar-css" style="overflow: auto; max-height:300px;">
+            {% for article in r_articles %}
+            <div class="mx-auto w-75">
+              <a href="{% url 'recruitment_post_detail' slug_text=article.slug %}"><h5 style="color: black;">{{ article.title }}</h5></a>
+              <hr>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- affiliated marketing -->
+          {% if request.get_full_path == "/recruitment_articles/" or request.get_full_path == "/all_articles/" %}
+          <div class="m-2">
+            <script type="text/javascript" language="javascript">
+              var aax_size='300x600';
+              var aax_pubname = 'innovation0a7-21';
+              var aax_src='302';
+            </script>
+            <script type="text/javascript" language="javascript" src="http://c.amazon-adsystem.com/aax2/assoc.js"></script>
+          </div>
+          
+          {% endif %}
+
+        </div>
+
+    </div>      
+</div>
+
+<!-- footer -->
+<footer>
+    <div class="mt-5 pt-3 pb-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-xs-12 about-company">
+              <h2>ABOUT US</h2>
+              <p class="pr-5 text-white-50">Here we post <a href="/all_articles/">Informational articles</a> and <a href="/recruitment_articles/">recruitment information</a> compiled from government publications and authentic sources.</p>
+              <p><a class="facebook" href="https://www.facebook.com/DRDOTECHNOVATION/"><i class="fa fa-facebook-square mr-1 facebook"></i>Technology Focus-MAGAZINE</a></p>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <h4 class="mt-lg-0 mt-sm-4">CONTACT US</h4>
+              <p><i class="fa fa-envelope-o mr-3"></i><a class="facebook" href="mailto: technologyfocusmagazine@gmail.com">technologyfocusdrdo@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col copyright">
+              <small class="text-white-50">© 2020 technologyfocus. All Rights Reserved.</small>
+            </div>
+          </div>
+        </div>
+        </div>
+</footer>
+<!-- jquery -->
+<script src="{% static 'index/js/jquery-3.4.1.min.js' %}"></script> 
+<!-- bootstrap -->
+<script src="{% static 'index/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
